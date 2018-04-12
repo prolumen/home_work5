@@ -6,14 +6,16 @@ import java.util.Hashtable;
 import java.util.Scanner;
 
 public class Calculator{
-    double var1, var2 ;
-    String str;
-
-    private Calculator(){
-        Calc<Double> var;
+    public static void main(String[] args) throws IOException {
+        Double var1, var2;
+        String str;
         Enumeration<String> operation;
-        Hashtable<String, Double> tab = new Hashtable<>();
-        var = (a, b) -> a + b;
+        Hashtable<String, Calc<Double>> tab = new Hashtable<>();
+
+        tab.put("-", (a, b) -> a - b);
+        tab.put("+", (a, b) -> a + b);
+        tab.put("*", (a, b) -> a * b);
+        tab.put("/", (a, b) -> a / b);
 
         Scanner scan = new Scanner(System.in);
         System.out.println("first num");
@@ -23,21 +25,12 @@ public class Calculator{
         System.out.println("operation + - * /");
         str = scan.next();
 
-        tab.put("+", var.exec(var1, var2));
-        tab.put("*", var.getProd(var1, var2));
-        tab.put("-", var.getDiff(var1, var2));
-        tab.put("/", var.getQuot(var1, var2));
-
         operation = tab.keys();
 
         while (operation.hasMoreElements()){
             if (operation.nextElement().equals(str)){
-                System.out.println("Resault:\t" + tab.get(str));
+                System.out.println("Resault:\t" + tab.get(str).exec(var1, var2));
             }
         }
-
-    }
-    public static void main(String[] args) throws IOException {
-        Calculator c = new Calculator();
     }
 }
